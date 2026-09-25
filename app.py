@@ -34,9 +34,7 @@ missing_columns = required_columns.difference(validation_data.columns)
 if missing_columns:
     raise ValueError(f"Missing columns in valdata.csv: {sorted(missing_columns)}")
 
-background_data = validation_data[feature_names].sample(
-    n=min(50, len(validation_data)), random_state=42
-)
+background_data = shap.kmeans(validation_data[feature_names].values, 20)
 
 
 def _numeric_bounds(column, default_min, default_max):
